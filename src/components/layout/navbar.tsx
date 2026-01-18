@@ -1,6 +1,6 @@
 "use client";
 
-import {Menu} from "lucide-react";
+import { Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -25,6 +25,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { ModeToggle } from "./modeToogle";
 
 interface MenuItem {
   title: string;
@@ -106,7 +107,10 @@ const Navbar = ({
               </NavigationMenu>
             </div>
           </div>
+
+          {/* Auth and toogle buttons */}
           <div className="flex gap-2">
+             <ModeToggle/>
             <Button asChild variant="outline" size="sm">
               <a href={auth.login.url}>{auth.login.title}</a>
             </Button>
@@ -155,12 +159,13 @@ const Navbar = ({
                   </Accordion>
 
                   <div className="flex flex-col gap-3">
+                    <ModeToggle/>
                     <Button asChild variant="outline">
-                    <Link href={auth.login.url}>{auth.login.title}</Link>  
+                      
+                      <Link href={auth.login.url}>{auth.login.title}</Link>
                     </Button>
                     <Button asChild>
-                      <Link href={auth.signup.url}>{auth.signup.title}</Link> 
-          
+                      <Link href={auth.signup.url}>{auth.signup.title}</Link>
                     </Button>
                   </div>
                 </div>
@@ -176,15 +181,12 @@ const Navbar = ({
 const renderMenuItem = (item: MenuItem) => {
   return (
     <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink 
-      asChild
-      className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground">
-
-
-      <Link href={item.url}>{item.title}</Link>
-
+      <NavigationMenuLink
+        asChild
+        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
+      >
+        <Link href={item.url}>{item.title}</Link>
       </NavigationMenuLink>
-
     </NavigationMenuItem>
   );
 };
