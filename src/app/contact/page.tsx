@@ -1,7 +1,7 @@
 export default function ContactPage() {
     return (
         <div>
-            Enter
+            contact page
         </div>
     );
 }
