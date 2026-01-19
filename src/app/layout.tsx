@@ -36,8 +36,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <h1>this is root </h1>
           {children}
         </ThemeProvider>
       </body>
