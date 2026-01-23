@@ -115,7 +115,8 @@ import {
 import Link from "next/link";
 import { adminRoutes } from "@/routes/adminRoutes";
 import { userRoutes } from "@/routes/userRoutes";
-import { Route } from "@/types/route.type";
+import { Route } from "@/types";
+
 
 
 export function AppSidebar({
