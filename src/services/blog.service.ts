@@ -2,7 +2,6 @@ import { env } from "@/env";
 
 const API_URL = env.API_URL;
 
-
 interface GetBlogParams {
   isFeatured?: boolean;
   search: string;
@@ -12,38 +11,48 @@ interface ServiceOptions {
   revalidate?: number;
 }
 export const blogService = {
-  getBlogPost: async function (params?: GetBlogParams, options?: ServiceOptions) {
+  getBlogPost: async function (
+    params?: GetBlogParams,
+    options?: ServiceOptions,
+  ) {
     try {
       const url = new URL(`${API_URL}/posts`);
       // url.searchParams.append("key", "value");
-      
-      if (params){
-        
+
+      if (params) {
         Object.entries(params).forEach(([key, value]) => {
-          if(value !== undefined && value !== null && value !== ""){
-            url.searchParams.append(key,value)
+          if (value !== undefined && value !== null && value !== "") {
+            url.searchParams.append(key, value);
           }
-        })
+        });
       }
-      const config: RequestInit = {
+      const config: RequestInit = {};
 
+      if (options?.cache) {
+        config.cache = options.cache;
       }
-
-      if(options?.cache) {
-        config.cache = options.cache
-      }
-      if(options?.revalidate){
-        config.next = {revalidate: options.revalidate}
+      if (options?.revalidate) {
+        config.next = { revalidate: options.revalidate };
       }
       console.log(url.toString());
-      
-      
+
       const res = await fetch(url.toString(), config); //{next: {revalidate: 10}
       const posts = await res.json();
       return { data: posts, error: null };
     } catch (error) {
       console.error("Error blog posts:", error);
       return { data: null, error: { message: "Failed to create blog posts" } };
+    }
+  },
+  getBlogById: async function (id: string) {
+    try {
+      const res = await fetch(`${API_URL}/posts/${id}`);
+
+      const data = await res.json();
+
+      return { data: data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something Went Wrong" } };
     }
   },
 };
